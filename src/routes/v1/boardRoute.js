@@ -4,19 +4,17 @@
  * "A bit of fragrance clings to the hand that gives flowers!"
  */
 
+
 import express from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { boardRoute } from '~/routes/v1/boardRoute'
+import { boardValidation } from '~/validations/boardValidation'
 
 const Router = express.Router()
 
-/** Check APIs v1/status */
-Router.get('/status', (req, res) => {
-  res.status(StatusCodes.OK).json({ message: 'API V1 are ready to use.' })
-})
+Router.route('/')
+  .get((req, res) => {
+    res.status(StatusCodes.OK).json({ message: 'GET: Note API get list boards.' })
+  })
+  .post(boardValidation.createNew)
 
-/** Board API */
-Router.use('/boards', boardRoute)
-
-export const APIs_V1 = Router
-
+export const boardRoute = Router
