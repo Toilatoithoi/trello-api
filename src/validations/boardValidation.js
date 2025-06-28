@@ -25,7 +25,7 @@ const createNew = async (req, res, next) => {
       'string.max': 'Title max 50 chars (trungquandev)',
       'string.trim': 'Title must not have leading or trailing whitespace (trungquandev)'
     }),
-    description: Joi.string().required().min(3).max(256).trim().strict()
+    description: Joi.string().required().min(3).max(255).trim().strict()
   })
 
   try {

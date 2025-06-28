@@ -5,7 +5,6 @@
  * "A bit of fragrance clings to the hand that gives flowers!"
  */
 
-import ApiError from '~/utils/ApiError'
 import { slugify } from '~/utils/formatters'
 
 const createNew = async (reqBody) => {
