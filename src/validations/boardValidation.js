@@ -28,12 +28,12 @@ const createNew = async (req, res, next) => {
   })
 
   try {
-    console.log('req.body: ', req.body)
     // Chỉ định abortEarly: false để trường hợp có nhiều lỗi validation thì trả về tất cả lỗi (video 52)
     await correctCondition.validateAsync(req.body, { abortEarly: false })
     // next là middleware function callback được Express.js sử dụng để chuyển quyền điều khiển sang middleware tiếp theo trong chuỗi xử lý request
-    //next()
-    res.status(StatusCodes.CREATED).json({ message: 'POST: Note API get new board.' })
+    // setup từ boardRoute sau khi chạy vào boardValidation.createNew sẽ chạy đến boardController.createNew
+    // Validation dữ liệu xong xuôi hợp lệ thì cho request đi tiếp sang Controller
+    next()
   } catch (error) {
     console.log(error)
     // Code: 422 Lỗi các thực thể dữ liệu không thể thực thi (thường dùng mã lỗi này cho validation)
