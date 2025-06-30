@@ -50,9 +50,23 @@ const findOneById = async (id) => {
   }
 }
 
+// aggregate là nối các bảng lại để lấy dữ liệu
+// Query tổng hợp (aggregate) để lấy toàn bộ Columns và Cards thuộc về Board
+const getDetails = async (id) => {
+  try {
+    // Hôm nay tạm thời giống hệt findOneId - và sẽ update aggregate tiếp ở những video tới
+    const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOne({ _id: new ObjectId(id) })
+    return result
+  } catch (error) {
+    // Phải để new Error(error) thì mới có stacktrace còn chỉ để throw error thì sẽ không có
+    throw new Error(error)
+  }
+}
+
 export const boardModel = {
   BOARD_COLLECTION_NAME,
   BOARD_COLLECTION_SCHEMA,
   createNew,
-  findOneById
+  findOneById,
+  getDetails
 }
