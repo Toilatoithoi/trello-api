@@ -86,7 +86,7 @@ const getDetails = async (id) => {
         }
       }
     ]).toArray()
-    return result[0] || {}
+    return result[0] || null
   } catch (error) {
     // Phải để new Error(error) thì mới có stacktrace còn chỉ để throw error thì sẽ không có
     throw new Error(error)
