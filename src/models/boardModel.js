@@ -31,6 +31,10 @@ const BOARD_COLLECTION_SCHEMA = Joi.object({
   _destroy: Joi.boolean().default(false)
 })
 
+const validateBeforeCreate = async (data) => {
+  return await BOARD_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })
+}
+
 const createNew = async (data) => {
   try {
     const valiData = await validateBeforeCreate(data)
@@ -40,10 +44,6 @@ const createNew = async (data) => {
     // Phải để new Error(error) thì mới có stacktrace còn chỉ để throw error thì sẽ không có
     throw new Error(error)
   }
-}
-
-const validateBeforeCreate = async (data) => {
-  return await BOARD_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })
 }
 
 const findOneById = async (id) => {
