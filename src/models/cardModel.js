@@ -30,10 +30,16 @@ const validateBeforeCreate = async (data) => {
 const createNew = async (data) => {
   try {
     const valiData = await validateBeforeCreate(data)
-    const createdBoard = await GET_DB().collection(CARD_COLLECTION_NAME).insertOne(valiData)
-    return createdBoard
+    // Biến đổi một số dữ liệu liên quan tới ObjectId chuẩn chỉnh
+    const newCardToAdd = {
+      ...valiData,
+      boardId: new ObjectId(valiData.boardId),
+      columnId: new ObjectId(valiData.columnId)
+    }
+
+    const createdCard = await GET_DB().collection(CARD_COLLECTION_NAME).insertOne(newCardToAdd)
+    return createdCard
   } catch (error) {
-    // Phải để new Error(error) thì mới có stacktrace còn chỉ để throw error thì sẽ không có
     throw new Error(error)
   }
 }
@@ -43,7 +49,6 @@ const findOneById = async (id) => {
     const result = await GET_DB().collection(CARD_COLLECTION_NAME).findOne({ _id: new ObjectId(id) })
     return result
   } catch (error) {
-    // Phải để new Error(error) thì mới có stacktrace còn chỉ để throw error thì sẽ không có
     throw new Error(error)
   }
 }
