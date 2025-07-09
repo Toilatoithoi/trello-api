@@ -52,7 +52,7 @@ const getDetails = async (boardId) => {
     })
     // B3: Xoá mảng cards khỏi board ban đầu
     delete resBoard.cards
-    console.log('resBoard: ', resBoard)
+    // console.log('resBoard: ', resBoard)
 
     return resBoard
   } catch (error) { throw error }
