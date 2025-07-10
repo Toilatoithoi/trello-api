@@ -40,7 +40,6 @@ const update = async (columnId, reqBody) => {
   } catch (error) { throw error }
 }
 
-
 export const columnService = {
   createNew,
   update

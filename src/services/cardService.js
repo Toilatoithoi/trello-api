@@ -26,7 +26,6 @@ const createNew = async (reqBody) => {
   } catch (error) { throw error }
 }
 
-
 export const cardService = {
   createNew
 }
