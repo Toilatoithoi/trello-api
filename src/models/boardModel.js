@@ -120,8 +120,6 @@ const update = async (boardId, updateData) => {
       }
     })
 
-    console.log('hello')
-
     // Đối với những dữ liệu liên quan ObjectId, biến đổi ở đây
     if (updateData.columnOrderIds) {
       updateData.columnOrderIds = updateData.columnOrderIds.map(_id => (new ObjectId(_id)))
