@@ -99,6 +99,7 @@ const login = async (reqBody) => {
       userInfo,
       env.ACCESS_TOKEN_SERCET_SIGNATURE,
       env.ACCESS_TOKEN_LIFE
+      // 5 // 5 thời gian sống của accessToken là 5 giây (ACCESS_TOKEN_LIFE)
     )
 
     const refreshToken = await JwtProvider.generateToken(
