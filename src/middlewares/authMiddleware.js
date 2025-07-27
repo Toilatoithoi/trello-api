@@ -18,7 +18,7 @@ const isAuthorized = async (req, res, next) => {
     // Bước 1: Thực hiện giải mã token xem nó có hợp lệ hay không
     const accessTokenDecoded = await JwtProvider.verifyToken(
       clientAccessToken,
-      env.ACCESS_TOKEN_SERCET_SIGNATURE
+      env.ACCESS_TOKEN_SECRET_SIGNATURE
     )
     // console.log('accessTokenDecoded: ', accessTokenDecoded)
 
