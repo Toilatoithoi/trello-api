@@ -14,7 +14,7 @@ const USER_COLLECTION_NAME = 'users'
 const USER_COLLECTION_SCHEMA = Joi.object({
   email: Joi.string().required().pattern(EMAIL_RULE).message(EMAIL_RULE_MESSAGE), // unique
   password: Joi.string().required(),
-  // username cắt ra từ email sẽ có khả năng không unique bởi vì sẽ có những tên email trùng nhau nhưng từ các nhà cung cấp khác nhau
+  // userName cắt ra từ email sẽ có khả năng không unique bởi vì sẽ có những tên email trùng nhau nhưng từ các nhà cung cấp khác nhau
   userName: Joi.string().required().trim().strict(),
   displayName: Joi.string().required().trim().strict(),
   avatar: Joi.string().default(null),
@@ -29,7 +29,7 @@ const USER_COLLECTION_SCHEMA = Joi.object({
 })
 
 // Chỉ định ra những Fields mà chúng ta không muốn cho phép cập nhật trong hàm update()
-const INVALID_UPDATE_FIELDS = ['_id', 'email', 'username', 'createdAt']
+const INVALID_UPDATE_FIELDS = ['_id', 'email', 'userName', 'createdAt']
 const validateBeforeCreate = async (data) => {
   return await USER_COLLECTION_SCHEMA.validateAsync(data, { abortEarly: false })
 }
