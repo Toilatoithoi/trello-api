@@ -31,7 +31,7 @@ const update = async (req, res, next) => {
   // Lưu ý không dùng require trong trường hợp Update
   const correctCondition = Joi.object({
     title: Joi.string().min(3).max(50).trim().strict(),
-    description: Joi.string().min(3).max(255).trim().strict(),
+    description: Joi.string().optional()
   })
 
   try {
