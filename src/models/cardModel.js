@@ -29,7 +29,7 @@ const CARD_COLLECTION_SCHEMA = Joi.object({
     userAvatar: Joi.string(),
     userDisplayName: Joi.string(),
     content: Joi.string(),
-    // Chỗ này lưu ý vì dùng hàm Spush đề thêm comment nên không set default-Date.now- luôn giống hàm insertone khi create được.
+    // Chỗ này lưu ý vì dùng hàm Spush đề thêm comment nên không set default-Date.now- luôn giống hàm insertOne khi create được.
     commentedAt: Joi.date().timestamp()
   }).default([]),
 
@@ -104,11 +104,30 @@ const deleteManyByColumnId = async (columnId) => {
   }
 }
 
+/**
+ * Đầy một phần tử comment vào đầu màng comments!
+ * -Trong JS, ngược lại với push (thêm phần tử vào cuối màng) sẽ là unshift (thêm phần tử vào đầu màng)
+ * - Nhưng trong mongodb hiện tại chỉ có spush mặc định đầy phần tử vào cuối màng.
+ * Dĩ nhiên cứ lưu comment mới vào cuối màng cũng được, nhưng nay sẽ học cách để thêm phần tử vào đầu màng trong mongodb.
+ * Vẫn dùng $push, nhưng bọc data vào Array đề trong seach và chỉ định $position: 0
+*/
+const unshiftNewComment = async (cardId, commentData) => {
+  try {
+    const result = await GET_DB().collection(CARD_COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(cardId) },
+      { $push: { comments: { $each: [commentData], $position: 0 } } },
+      { returnDocument: 'after' }
+    )
+    return result.value
+  } catch (error) { throw new Error(error) }
+}
+
 export const cardModel = {
   CARD_COLLECTION_NAME,
   CARD_COLLECTION_SCHEMA,
   createNew,
   findOneById,
   update,
-  deleteManyByColumnId
+  deleteManyByColumnId,
+  unshiftNewComment
 }

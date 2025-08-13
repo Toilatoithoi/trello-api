@@ -21,7 +21,13 @@ const BOARD_COLLECTION_SCHEMA = Joi.object({
   slug: Joi.string().required().min(3).trim().strict(),
   description: Joi.string().required().min(3).max(255).trim().strict(),
 
-  type: Joi.string().valid(BOARD_TYPES.PUBLIC, BOARD_TYPES.PRIVATE).required(),
+  /**
+   * Tips: Thay vì gọi lần lượt tất cả type của board đề cho vào hàm valid() thì có thể viết gọn lại bằng Object.values() kết hợp Spread Operator của JS. Cụ thể: valid(...Object.values(BOARD_TYPES))
+   * Làm như trên thì sau này dù các bạn có thêm hay sửa gì vào cái BOARD_TYPES trong file constants thi ở những chỗ dùng Joi trong Model hay Validation cũng không cần phải đụng vào nữa. Tối ưu gọn gàng luôn.
+  */
+  // type: Joi.string().valid(BOARD_TYPES.PUBLIC, BOARD TYPES.PRIVATE).required(),
+  type: Joi.string().required().valid(...Object.values(BOARD_TYPES)),
+
 
   // Lưu ý các item trong mảng columnOrderIds là ObjectId nên cần thêm pattern cho chuẩn nhé, (lúc đầu quay video số 57 mình quên nhưng sang đầu video số 58 sẽ có nhắc lại về cái này)
   columnOrderIds: Joi.array().items(
