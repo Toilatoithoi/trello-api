@@ -48,6 +48,35 @@ const createNewBoardInvitation = async (reqBody, inviterId) => {
   } catch (error) { throw error }
 }
 
+const getInvitations = async (userId) => {
+  try {
+    const getInvitations = await invitationModel.findByUser(userId)
+    console.log('🚀 ~ getInvitations ~ getInvitations:', getInvitations)
+
+    // Vì các dữ liệu inviter, invitee và board là đang ở giá trị mảng 1 phần tử nếu lấy ra được nên chúng ta biến đổi dữ liệu nó về Json Object trước khi trả về cho phía FE
+    // Cách viết 1: Sẽ viết kiểu này khi có xử lý 1 logic nào đấy trước khi trả về kết quả thì mới return map ra 1 {} function
+    // const resInvitations = getInvitations.map(i => {
+    //   return {
+    //     ...i,
+    //     inviter: i.inviter[0] || {},
+    //     invitee: i.invitee[0] || {},
+    //     board: i.board[0] || {}
+    //   }
+    // })
+    // Cách viết 2: Nếu return kết quả luôn thì sẽ viết kiểu này cho ngắn gọn
+    const resInvitations = getInvitations.map(i => ({
+      ...i,
+      inviter: i.inviter[0] || {},
+      invitee: i.invitee[0] || {},
+      board: i.board[0] || {}
+    }))
+    console.log('🚀 ~ getInvitations ~ resInvitations:', resInvitations)
+
+    return resInvitations
+  } catch (error) { throw error }
+}
+
 export const invitationService = {
-  createNewBoardInvitation
+  createNewBoardInvitation,
+  getInvitations
 }

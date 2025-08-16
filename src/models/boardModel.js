@@ -88,6 +88,8 @@ const findOneById = async (boardId) => {
 // Query tổng hợp (aggregate) để lấy toàn bộ Columns và Cards thuộc về Board
 const getDetails = async (userId, boardId) => {
   try {
+    // Hôm nay tạm thời giống hệt findOneId - và sẽ update aggregate tiếp ở những video tới
+    // const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOne({ _id: new ObjectId(id) })
     const queryConditions = [
       { _id: new ObjectId(boardId) },
       { _destroy: false },
@@ -99,8 +101,6 @@ const getDetails = async (userId, boardId) => {
       }
     ]
 
-    // Hôm nay tạm thời giống hệt findOneId - và sẽ update aggregate tiếp ở những video tới
-    // const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOne({ _id: new ObjectId(id) })
     const result = await GET_DB().collection(BOARD_COLLECTION_NAME).aggregate([
       { $match: { $and: queryConditions } },
       {
