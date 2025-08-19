@@ -251,6 +251,20 @@ const getBoards = async (userId, page, itemsPerPage) => {
   } catch (error) { throw new Error(error) }
 }
 
+const pushMemberIds = async (boardId, userId) => {
+  try {
+    // returnDocument có 2 giá trị là before và after
+    // Hàm findOneAndUpdate có 1 thứ 2 returnDocument: before là trả về giá trị của bản ghi trước cập nhật lại còn after trả về giá trị của bản ghi sau khi cập nhật lại
+    const result = await GET_DB().collection(BOARD_COLLECTION_NAME).findOneAndUpdate(
+      { _id: new ObjectId(boardId) },
+      { $push: { memberIds: new ObjectId(userId) } },
+      { returnDocument: 'after' }
+    )
+
+    return result
+  } catch (error) { throw new Error(error) }
+}
+
 export const boardModel = {
   BOARD_COLLECTION_NAME,
   BOARD_COLLECTION_SCHEMA,
@@ -260,5 +274,6 @@ export const boardModel = {
   pushColumnOrderIds,
   update,
   pullColumnOrderIds,
-  getBoards
+  getBoards,
+  pushMemberIds
 }

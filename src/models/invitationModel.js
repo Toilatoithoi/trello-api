@@ -90,7 +90,7 @@ const update = async (invitationId, updateData) => {
       { $set: updateData },
       { returnDocument: 'after' } // sẽ trả về kết quả mới sau khi cập nhật
     )
-    return result
+    return result.value
   } catch (error) { throw new Error(error) }
 }
 
