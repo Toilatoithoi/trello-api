@@ -9,7 +9,8 @@ import { env } from '~/config/environment'
 export const WHITELIST_DOMAINS = [
   // 'http://localhost:5173' // Không cần localhost nữa vì file config/cros đã luôn luôn  cho phép môi trường dev (env.BUILD_MODE ='dev')
   // ...vv ví dụ sau này sẽ deploy lên domain chính thức ...vv
-  'https://trello-web-henna-eta.vercel.app'
+  'https://trello-web-henna-eta.vercel.app',
+  'https://trello-7u9iahxmd-kayffs-projects.vercel.app'
 ]
 
 export const BOARD_TYPES = {
