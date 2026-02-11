@@ -5,7 +5,7 @@ import bcryptjs from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 import { pickUser } from '~/utils/formatters'
 import { WEBSITE_DOMAIN } from '~/utils/constants'
-import { ResendProvider } from '~/providers/ResendProvider'
+import { NodeMailerProvider } from '~/providers/NodeMailerProvider'
 import { env } from '~/config/environment'
 import { JwtProvider } from '~/providers/JwtProvider'
 import { CloudinaryProvider } from '~/providers/CloudinaryProvider'
@@ -42,9 +42,8 @@ const createNew = async (reqBody) => {
       <h3>${verificationLink}</h3>
       <h3>Sincerely, <br/> - Trungquandev - Một Lập Trình Viên -</h3>
     `
-    // Gọi tới cái Provider gửi mail
-    // await BrevoProvider.sendEmail(getNewUser.email, customSubject, htmlContent)
-    await ResendProvider.sendEmail({
+    // Gọi NodeMailerProvider gửi mail (SMTP)
+    await NodeMailerProvider.sendEmail({
       to: getNewUser.email,
       subject: customSubject,
       html: htmlContent
