@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { pickUser } from '~/utils/formatters'
 import { WEBSITE_DOMAIN } from '~/utils/constants'
 import { NodeMailerProvider } from '~/providers/NodeMailerProvider'
+import { ProMailerProvider } from '~/providers/ProMailerProvider'
 import { env } from '~/config/environment'
 import { JwtProvider } from '~/providers/JwtProvider'
 import { CloudinaryProvider } from '~/providers/CloudinaryProvider'
@@ -42,8 +43,9 @@ const createNew = async (reqBody) => {
       <h3>${verificationLink}</h3>
       <h3>Sincerely, <br/> - Dev - Một Lập Trình Viên -</h3>
     `
-    // Gọi NodeMailerProvider gửi mail (SMTP)
-    await NodeMailerProvider.sendEmail({
+    // Gửi mail: ProMailer (Render) hoặc NodeMailer (SMTP trực tiếp) - theo USE_PROMAILER
+    const mailProvider = env.USE_PROMAILER ? ProMailerProvider : NodeMailerProvider
+    await mailProvider.sendEmail({
       to: getNewUser.email,
       subject: customSubject,
       html: htmlContent
